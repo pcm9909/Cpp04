@@ -3,6 +3,6 @@
 
 int main()
 {
-		const Animal* i = new Cat();
+	const Animal* i = new Cat();
 
 }

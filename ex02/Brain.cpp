@@ -1,31 +1,25 @@
-#include "Animal.hpp"
+#include "Brain.hpp"
 
-Animal::Animal()
+Brain::Brain()
 {
 	std::cout << typeid(this).name() << " constructor called!" << std::endl;
 }
 
-Animal::~Animal()
+Brain::~Brain()
 {
 	std::cout << typeid(this).name() << " destructor called!" << std::endl;
 }
 
-Animal::Animal(const Animal &animal)
+Brain::Brain(const Brain &brain)
 {
 	std::cout << typeid(this).name() << " Copy Constructor called" << std::endl;
-	*this = animal;
+	*this = brain;
 }
-Animal &Animal::operator=(const Animal &animal)
+Brain &Brain::operator=(const Brain &brain)
 {
-	if(this != &animal)
+	if(this != &brain)
 	{
-		this->type = getType();
 		std::cout << typeid(this).name() << " Assignation Operator called" << std::endl;
 	}
 	return *this;
-}
-
-std::string Animal::getType() const
-{
-	return this->type;
 }
