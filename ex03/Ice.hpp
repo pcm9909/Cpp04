@@ -5,7 +5,7 @@
 
 class Ice : public AMateria
 {
-public: // 생성자를 public으로 변경
+public:
 	Ice();
 	~Ice();
 	Ice(const Ice &ice);

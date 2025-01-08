@@ -4,7 +4,7 @@
 #include <string>
 #include "AMateria.hpp"
 
-class AMateria; // 전방 선언
+class AMateria;
 
 class ICharacter
 {

@@ -5,12 +5,12 @@
 #include <iostream>
 #include "ICharacter.hpp"
 
-class ICharacter; // 전방 선언
+class ICharacter;
 
 class AMateria
 {
 protected:
-	std::string type; // Materia의 타입을 저장하는 멤버 변수
+	std::string type;
 public:
 	AMateria(std::string const &type);
 	virtual ~AMateria();				  // 가상 소멸자 추가
