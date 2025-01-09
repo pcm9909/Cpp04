@@ -2,6 +2,7 @@
 
 Ice::Ice() : AMateria("ice")
 {
+	this->type = "ice";
 	std::cout << typeid(this).name() << " 생성자 호출" << std::endl;
 }
 

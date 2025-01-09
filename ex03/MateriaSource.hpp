@@ -6,7 +6,7 @@
 class MateriaSource : public IMateriaSource
 {
 	private:
-		AMateria *materias[4];
+		AMateria* materias[4];
 		int count;
 
 	public:
