@@ -4,5 +4,6 @@
 int main()
 {
 	const Animal* i = new Cat();
-
+	i->makeSound();
+	delete i;
 }

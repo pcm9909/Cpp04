@@ -4,6 +4,7 @@ Character::Character(std::string name)
 {
 	std::cout << typeid(this).name() << " 생성자 호출" << std::endl;
     this->name = name;
+	this->m = NULL;
     for (int i = 0; i < 4; i++)
         materias[i] = NULL;
 }
@@ -19,6 +20,8 @@ Character::~Character()
 			materias[i] = NULL;
 		}
     }
+	deleteAll(this->m);
+
 }
 
 Character::Character(const Character &character)
@@ -69,7 +72,17 @@ void Character::unequip(int idx)
 {
     if ((idx >= 0 && idx < 4) )
 	{
-		delete materias[idx];
+		if(!this->m)
+		{
+			this->m = new MateriaList(materias[idx]);
+		}
+		else
+		{
+			MateriaList *node = new MateriaList(materias[idx]);
+			node->prev = this->m;
+			this->m->next = node;
+			this->m = node;
+		}
         materias[idx] = NULL;
 	}
 }
@@ -78,4 +91,17 @@ void Character::use(int idx, ICharacter &target)
 {
     if (idx >= 0 && idx < 4 && materias[idx] != NULL)
         materias[idx]->use(target);
+}
+
+void Character::deleteAll(MateriaList* head) {
+    MateriaList* current = head;
+    MateriaList* nextNode;
+
+    while (current)
+	{
+		std::cout << "called" << std::endl;
+        nextNode = current->prev;
+        delete current;
+        current = nextNode;
+    }
 }

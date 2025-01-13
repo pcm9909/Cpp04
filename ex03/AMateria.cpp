@@ -8,6 +8,7 @@ AMateria::AMateria(std::string const &type)
 
 AMateria::~AMateria()
 {
+	std::cout << typeid(this).name() << " 소멸자 호출" << std::endl;
 }
 
 std::string const &AMateria::getType() const
