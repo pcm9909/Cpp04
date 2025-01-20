@@ -12,8 +12,8 @@ class Brain
 		virtual ~Brain();
 		Brain(const Brain &animal);
 		Brain &operator= (const Brain &ct);
-	private:
 		std::string ideas[100];
+		std::string* getIdeas();
 };
 
 #endif
