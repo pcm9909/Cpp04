@@ -28,6 +28,7 @@ Cat &Cat::operator=(const Cat &cat)
 	{
 		brain->releaseRef();
 		this->brain = new Brain(*cat.brain); // 깊은 복사 수행
+		brain->addRef();
 		this->type = cat.type;
 	}
 	return *this;

@@ -18,7 +18,6 @@ Dog::Dog(const Dog &dog)
 {
 	std::cout << typeid(*this).name() << " Copy Constructor called" << std::endl;
 	this->brain = dog.brain; // 얕은 복사 수행
-	brain->addRef();
 	this->type = dog.type;
 }
 
@@ -29,6 +28,7 @@ Dog &Dog::operator=(const Dog &dog)
 	{
 		brain->releaseRef();
 		this->brain = new Brain(*dog.brain); // 깊은 복사 수행
+		brain->addRef();
 		this->type = dog.type;
 	}
 	return *this;
