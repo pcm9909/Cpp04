@@ -13,24 +13,21 @@ Cat::~Cat()
 	std::cout << typeid(this).name() << " destructor called!" << std::endl;
 }
 
-Cat::Cat(const Cat &cat)
+Cat::Cat(const Cat &dog)
 {
-	std::cout << typeid(this).name() << " Copy Constructor called" << std::endl;
-	*this = cat;
+	std::cout << typeid(*this).name() << " Copy Constructor called" << std::endl;
+	this->brain = new Brain(*dog.brain);
+	this->type = dog.type;
 }
 
-Cat &Cat::operator=(const Cat &cat)
+Cat &Cat::operator=(const Cat &dog)
 {
-	std::cout << typeid(this).name() << " Assignation Operator called" << std::endl;
-	if(this != &cat)
+	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
+	if (this != &dog)
 	{
 		delete this->brain;
-		this->brain = new Brain();
-		for (int i = 0; i < 100; ++i)
-		{
-			this->brain->ideas[i] = cat.brain->ideas[i];
-		}
-		this->type = getType();
+		this->brain = new Brain(*dog.brain);
+		this->type = dog.type;
 	}
 	return *this;
 }
