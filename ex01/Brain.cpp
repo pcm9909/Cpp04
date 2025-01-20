@@ -1,36 +1,51 @@
+// Brain.cpp
 #include "Brain.hpp"
+#include <iostream>
 
-Brain::Brain()
+Brain::Brain() : refCount(new int(1))
 {
-	std::cout << typeid(this).name() << " constructor called!" << std::endl;
+	std::cout << typeid(*this).name() << " constructor called!" << std::endl;
+}
+
+Brain::Brain(const Brain &other) : ideas(), refCount(other.refCount)
+{
+	++(*refCount);
+	std::cout << typeid(*this).name() << " Copy Constructor called" << std::endl;
 }
 
 Brain::~Brain()
 {
-	std::cout << typeid(this).name() << " destructor called!" << std::endl;
-}
-
-Brain::Brain(const Brain &brain)
-{
-	std::cout << typeid(this).name() << " Copy Constructor called" << std::endl;
-	*this = brain;
-}
-
-Brain &Brain::operator=(const Brain &brain)
-{
-	if(this != &brain)
+	if (--(*refCount) == 0)
 	{
-		std::cout << typeid(this).name() << " Assignation Operator called" << std::endl;
-		for (int i = 0; i < 100; ++i)
-		{
-			this->ideas[i] = brain.ideas[i];
-		}
+		delete refCount;
+		std::cout << typeid(*this).name() << " destructor called!" << std::endl;
 	}
+}
+
+Brain &Brain::operator=(const Brain &other)
+{
+	if (this != &other)
+	{
+		if (--(*refCount) == 0)
+		{
+			delete refCount;
+		}
+		refCount = other.refCount;
+		++(*refCount);
+	}
+	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
 	return *this;
 }
 
-std::string* Brain::getIdeas() {
-    return ideas;
+void Brain::addRef()
+{
+	++(*refCount);
 }
 
-
+void Brain::releaseRef()
+{
+	if (--(*refCount) == 0)
+	{
+		delete this;
+	}
+}

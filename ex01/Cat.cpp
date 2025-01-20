@@ -4,30 +4,31 @@ Cat::Cat()
 {
 	this->type = "Cat";
 	this->brain = new Brain();
-	std::cout << typeid(this).name() << " constructor called!" << std::endl;
+	std::cout << typeid(*this).name() << " constructor called!" << std::endl;
 }
 
 Cat::~Cat()
 {
-	delete this->brain;
-	std::cout << typeid(this).name() << " destructor called!" << std::endl;
+	brain->releaseRef();
+	std::cout << typeid(*this).name() << " destructor called!" << std::endl;
 }
 
-Cat::Cat(const Cat &dog)
+Cat::Cat(const Cat &cat)
 {
 	std::cout << typeid(*this).name() << " Copy Constructor called" << std::endl;
-	this->brain = new Brain(*dog.brain);
-	this->type = dog.type;
+	this->brain = cat.brain; // 얕은 복사 수행
+	brain->addRef();
+	this->type = cat.type;
 }
 
-Cat &Cat::operator=(const Cat &dog)
+Cat &Cat::operator=(const Cat &cat)
 {
 	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
-	if (this != &dog)
+	if (this != &cat)
 	{
-		delete this->brain;
-		this->brain = new Brain(*dog.brain);
-		this->type = dog.type;
+		brain->releaseRef();
+		this->brain = new Brain(*cat.brain); // 깊은 복사 수행
+		this->type = cat.type;
 	}
 	return *this;
 }
@@ -44,7 +45,7 @@ std::string Cat::getIdeas(int i)
 
 void Cat::setIdeas(int index, std::string str)
 {
-	if(this->brain->ideas[index].empty())
+	if (this->brain->ideas[index].empty())
 	{
 		this->brain->ideas[index] = str;
 	}
