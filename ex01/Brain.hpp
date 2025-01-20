@@ -3,6 +3,7 @@
 #define BRAIN_HPP
 
 #include <string>
+#include <typeinfo>
 
 class Brain
 {
