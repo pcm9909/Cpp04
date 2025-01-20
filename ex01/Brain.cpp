@@ -37,15 +37,12 @@ Brain &Brain::operator=(const Brain &other)
 	return *this;
 }
 
-void Brain::addRef()
+std::string Brain::getIdeas(int index)
 {
-	++(*refCount);
+	return ideas[index];
 }
 
-void Brain::releaseRef()
+void Brain::setIdeas(int index, std::string str)
 {
-	if (--(*refCount) == 0)
-	{
-		delete this;
-	}
+	ideas[index] = str;
 }

@@ -11,10 +11,8 @@ public:
 	Brain(const Brain &other);
 	~Brain();
 	Brain &operator=(const Brain &other);
-
-	void addRef();
-	void releaseRef();
-
+	void setIdeas(int index, std::string str);
+	std::string getIdeas(int index);
 	std::string ideas[100];
 
 private:
