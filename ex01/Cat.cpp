@@ -24,6 +24,7 @@ Cat &Cat::operator=(const Cat &cat)
 	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
 	if (this != &cat)
 	{
+		delete this->brain;
 		this->brain = new Brain(*cat.brain); // 깊은 복사 수행
 		this->type = cat.type;
 	}

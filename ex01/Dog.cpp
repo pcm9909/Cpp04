@@ -24,6 +24,7 @@ Dog &Dog::operator=(const Dog &dog)
 	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
 	if (this != &dog)
 	{
+		delete this->brain;
 		this->brain = new Brain(*dog.brain); // 깊은 복사 수행
 		this->type = dog.type;
 	}
