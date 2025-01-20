@@ -37,9 +37,9 @@ Brain &Brain::operator=(const Brain &other)
 	return *this;
 }
 
-std::string Brain::getIdeas(int index)
+std::string* Brain::getIdeas()
 {
-	return ideas[index];
+	return ideas;
 }
 
 void Brain::setIdeas(int index, std::string str)
