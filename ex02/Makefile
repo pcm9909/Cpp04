@@ -1,5 +1,5 @@
 NAME = Animal
-CC = c++
+CC = clang++
 FLAG =  -std=c++98 -g
 SRCS = Animal.cpp Cat.cpp Dog.cpp Brain.cpp main.cpp
 

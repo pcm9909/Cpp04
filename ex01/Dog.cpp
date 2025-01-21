@@ -1,4 +1,3 @@
-// Dog.cpp
 #include "Dog.hpp"
 
 Dog::Dog()
@@ -10,22 +9,24 @@ Dog::Dog()
 
 Dog::~Dog()
 {
+	delete this->brain;
 	std::cout << typeid(*this).name() << " destructor called!" << std::endl;
 }
 
 Dog::Dog(const Dog &dog)
 {
 	std::cout << typeid(*this).name() << " Copy Constructor called" << std::endl;
-	*this = dog;
+	this->brain = new Brain(*(dog.brain));
+	this->type = dog.type;
 }
 
-Dog &Dog::operator=(const Dog &dog)
+Dog &Dog::operator=(const Dog& dog)
 {
 	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
 	if (this != &dog)
 	{
 		delete this->brain;
-		this->brain = new Brain(*dog.brain); // 깊은 복사 수행
+		this->brain = new Brain(*(dog.brain));
 		this->type = dog.type;
 	}
 	return *this;

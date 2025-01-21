@@ -7,17 +7,15 @@
 
 class Brain
 {
-public:
-	Brain();
-	Brain(const Brain &other);
-	~Brain();
-	Brain &operator=(const Brain &other);
-	void setIdeas(int index, std::string str);
-	std::string* getIdeas();
-	std::string ideas[100];
-
-private:
-	int *refCount;
+	public:
+		Brain();
+		Brain(const Brain &other);
+		~Brain();
+		Brain &operator=(const Brain &other);
+		void setIdeas(int index, std::string str);
+		std::string getIdeas(int i);
+	protected:
+		std::string ideas[100];
 };
 
 #endif

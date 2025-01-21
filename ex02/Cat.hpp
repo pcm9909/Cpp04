@@ -8,10 +8,12 @@ class Cat : public Animal
 {
 	public:
 		Cat();
-		virtual ~Cat();
-		Cat(const Cat &cat);
-		Cat &operator= (const Cat &cat);
+		~Cat();
+		Cat(const Cat& cat);
+		Cat &operator= (const Cat& cat);
 		virtual void makeSound() const;
+		Brain* getBrain();
+		int copy;
 	private:
 		Brain *brain;
 };

@@ -1,7 +1,7 @@
+// Brain.hpp
 #ifndef BRAIN_HPP
-# define BRAIN_HPP
+#define BRAIN_HPP
 
-#include <iostream>
 #include <string>
 #include <typeinfo>
 
@@ -9,10 +9,12 @@ class Brain
 {
 	public:
 		Brain();
-		virtual ~Brain();
-		Brain(const Brain &animal);
-		Brain &operator= (const Brain &ct);
-	private:
+		Brain(const Brain &other);
+		~Brain();
+		Brain &operator=(const Brain &other);
+		void setIdeas(int index, std::string str);
+		std::string getIdeas(int i);
+	protected:
 		std::string ideas[100];
 };
 

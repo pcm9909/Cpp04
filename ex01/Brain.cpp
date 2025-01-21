@@ -2,44 +2,38 @@
 #include "Brain.hpp"
 #include <iostream>
 
-Brain::Brain() : refCount(new int(1))
+Brain::Brain()
 {
 	std::cout << typeid(*this).name() << " constructor called!" << std::endl;
 }
 
-Brain::Brain(const Brain &other) : ideas(), refCount(other.refCount)
+Brain::Brain(const Brain& other)
 {
-	++(*refCount);
 	std::cout << typeid(*this).name() << " Copy Constructor called" << std::endl;
+	*this = other;
 }
 
 Brain::~Brain()
 {
-	if (--(*refCount) == 0)
-	{
-		delete refCount;
-		std::cout << typeid(*this).name() << " destructor called!" << std::endl;
-	}
+	std::cout << typeid(*this).name() << " destructor called!" << std::endl;
 }
 
 Brain &Brain::operator=(const Brain &other)
 {
 	if (this != &other)
 	{
-		if (--(*refCount) == 0)
+		for(int i = 0; i < 100; i++)
 		{
-			delete refCount;
+			this->ideas[i] = other.ideas[i];
 		}
-		refCount = other.refCount;
-		++(*refCount);
 	}
 	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
 	return *this;
 }
 
-std::string* Brain::getIdeas()
+std::string Brain::getIdeas(int i)
 {
-	return ideas;
+	return ideas[i];
 }
 
 void Brain::setIdeas(int index, std::string str)

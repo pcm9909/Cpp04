@@ -9,23 +9,24 @@ Cat::Cat()
 
 Cat::~Cat()
 {
-	delete brain;
+	delete this->brain;
 	std::cout << typeid(*this).name() << " destructor called!" << std::endl;
 }
 
 Cat::Cat(const Cat &cat)
 {
 	std::cout << typeid(*this).name() << " Copy Constructor called" << std::endl;
-	*this = cat;
+	this->brain = new Brain(*(cat.brain));
+	this->type = cat.type;
 }
 
-Cat &Cat::operator=(const Cat &cat)
+Cat &Cat::operator=(const Cat& cat)
 {
 	std::cout << typeid(*this).name() << " Assignation Operator called" << std::endl;
 	if (this != &cat)
 	{
 		delete this->brain;
-		this->brain = new Brain(*cat.brain); // 깊은 복사 수행
+		this->brain = new Brain(*(cat.brain));
 		this->type = cat.type;
 	}
 	return *this;
