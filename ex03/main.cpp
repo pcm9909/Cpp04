@@ -1,108 +1,131 @@
+// #include "AMateria.hpp"
+// #include "Character.hpp"
+// #include "MateriaSource.hpp"
+// #include "Ice.hpp"
+// #include "Cure.hpp"
+
+// using namespace std;
+
+// void subjectTest(void){
+// 	std::cout << "Subject Test START" << std::endl;
+// 	IMateriaSource* src = new MateriaSource();
+// 	src->learnMateria(new Ice());
+// 	src->learnMateria(new Cure());
+// 	ICharacter* me = new Character("me");
+// 	AMateria* tmp;
+// 	tmp = src->createMateria("ice");
+// 	me->equip(tmp);
+// 	tmp = src->createMateria("cure");
+// 	me->equip(tmp);
+// 	ICharacter* bob = new Character("bob");
+// 	me->use(0, *bob);
+// 	me->use(1, *bob);
+// 	delete bob;
+// 	delete me;
+// 	delete src;
+// 	std::cout << "Subject Test START" << std::endl << std::endl;
+// }
+// int main(void){
+// 	subjectTest();
+// 	return 0;
+// }
+
+
 #include "AMateria.hpp"
-#include "Character.hpp"
+#include "IMateriaSource.hpp"
 #include "MateriaSource.hpp"
 #include "Ice.hpp"
 #include "Cure.hpp"
+#include "ICharacter.hpp"
+#include "Character.hpp"
+#include <iostream>
 
-// int main()
-// {
-//     IMateriaSource* src = new MateriaSource();
-//     src->learnMateria(new Ice());
-//     src->learnMateria(new Cure());
-//     ICharacter* me = new Character("me");
-//     AMateria* tmp;
-//     tmp = src->createMateria("ice");
-//     me->equip(tmp);
-//     tmp = src->createMateria("cure");
-//     me->equip(tmp);
-//     ICharacter* bob = new Character("bob");
-//     me->use(0, *bob);
-//     me->use(1, *bob);
-//     delete bob;
-//     delete me;
-//     delete src;
-//     return 0;
-// }
+int main() {
+    // {
+    //     std::cout << "1. subject testcase" << std::endl;
+    //     IMateriaSource *src = new MateriaSource();
+    //     src->learnMateria(new Ice());
+    //     src->learnMateria(new Cure());
 
-void customTests(void){
-	MateriaSource* materiaMaker = new MateriaSource();
-	ICharacter* bob = new Character("bob");
-	MateriaSource stackMaker;
-	Character ned("Ned");
+    //     ICharacter *me = new Character("me");
 
-	std::cout << "Custom Test START" << std::endl;
-	materiaMaker->learnMateria(new Ice());
-	materiaMaker->learnMateria(new Cure());
-	materiaMaker->learnMateria(new Ice());
-	materiaMaker->learnMateria(new Cure());
-	materiaMaker->learnMateria(new Cure()); // tenta quinta inserção, não deve ser guardado.
+    //     AMateria* tmp;
+    //     tmp = src->createMateria("ice");
+    //     me->equip(tmp);
 
-	stackMaker.learnMateria(new Ice());
-	stackMaker.learnMateria(new Cure());
-	stackMaker.learnMateria(new Ice());
-	stackMaker.learnMateria(new Cure());
-	stackMaker.learnMateria(new Cure());
+    //     tmp = src->createMateria("cure");
+    //     me->equip(tmp);
 
-	bob->equip(materiaMaker->createMateria("non")); // funcao nao gerara ponteiro valido, nada deve ser inserido
-	bob->equip(materiaMaker->createMateria("ice"));
-	bob->equip(materiaMaker->createMateria("cure"));
-	bob->equip(materiaMaker->createMateria("ice"));
-	bob->equip(materiaMaker->createMateria("cure"));
-	bob->equip(materiaMaker->createMateria("ice")); // tenta quinta inserção, não deve ser guardado.
-	ned.equip(stackMaker.createMateria("non")); // funcao nao gerara ponteiro valido, nada deve ser inserido
-	ned.equip(stackMaker.createMateria("ice"));
-	ned.equip(stackMaker.createMateria("cure"));
-	ned.equip(stackMaker.createMateria("ice"));
-	ned.equip(stackMaker.createMateria("cure"));
-	ned.equip(stackMaker.createMateria("ice")); // tenta quinta inserção, não deve ser guardado.
-	bob->use(0, ned);
-	bob->use(1, ned);
-	bob->use(2, ned);
-	bob->use(3, ned);
-	ned.use(0, *bob);
-	ned.use(1, *bob);
-	ned.use(2, *bob);
-	ned.use(3, *bob);
+    //     ICharacter* bob = new Character("bob");
+
+    //     me->use(0, *bob);
+    //     me->use(1, *bob);
+
+    //     delete bob;
+    //     delete me;
+    //     delete src;
+
+    //     std::cout << std::endl;
+    // }
+
+    // {
+    //     std::cout << "2. test MateriaSource & Character inventory overflow" << std::endl;
+    //     IMateriaSource *src = new MateriaSource();
+    //     src->learnMateria(new Ice());
+    //     src->learnMateria(new Cure());
+    //     src->learnMateria(new Cure());
+    //     src->learnMateria(new Cure());
+    //     src->learnMateria(new Cure());
+
+    //     ICharacter *me = new Character("me");
+    //     AMateria* tmp;
+    //     tmp = src->createMateria("ice");
+    //     me->equip(tmp);
+	// 	tmp = src->createMateria("ice");
+    //     me->equip(tmp);
+    //     tmp = src->createMateria("cure");
+    //     me->equip(tmp);
+    //     tmp = src->createMateria("cure");
+    //     me->equip(tmp);
+    //     tmp = src->createMateria("ice");
+    //     me->equip(tmp);
+
+    //     delete src;
+    //     delete me;
+    //     std::cout << std::endl;
+    // }
+
+    {
+        std::cout << "3. if somebody try to unequip empty slot " << std::endl;
+        IMateriaSource *src = new MateriaSource();
+        src->learnMateria(new Ice());
+		src->learnMateria(new Ice());
+		src->learnMateria(new Ice());
+		src->learnMateria(new Cure());
+        ICharacter *me = new Character("me");
+		AMateria* tmp;
+		tmp = src->createMateria("ice");
+        me->equip(tmp);
+        tmp = src->createMateria("cure");
+        me->equip(tmp);
+        tmp = src->createMateria("cure");
+        me->equip(tmp);
+        tmp = src->createMateria("ice");
+        me->unequip(1);
+        me->unequip(2);
+        me->unequip(3);
+		me->unequip(3);
+        me->unequip(3);
+        me->unequip(3);
+        me->unequip(3);
+        me->unequip(3);
 
 
-	bob->unequip(-1); //tenta excluir um index nao existente
-	bob->unequip(0);
-	bob->unequip(1);
-	bob->unequip(2);
-	bob->unequip(3);
-	bob->unequip(4); //tenta excluir um index nao existente
-	ned.unequip(-1); //tenta excluir um index nao existente
-	ned.unequip(0);
-	ned.unequip(1);
-	ned.unequip(2);
-	ned.unequip(3);
-	ned.unequip(4); //tenta excluir um index nao existente
+        delete src;
+        delete me;
 
-	delete bob;
-	delete materiaMaker;
-	std::cout << "Custom Test END" << std::endl << std::endl;
-}
-void subjectTest(void){
-	std::cout << "Subject Test START" << std::endl;
-	IMateriaSource* src = new MateriaSource();
-	src->learnMateria(new Ice());
-	src->learnMateria(new Cure());
-	ICharacter* me = new Character("me");
-	AMateria* tmp;
-	tmp = src->createMateria("ice");
-	me->equip(tmp);
-	tmp = src->createMateria("cure");
-	me->equip(tmp);
-	ICharacter* bob = new Character("bob");
-	me->use(0, *bob);
-	me->use(1, *bob);
-	delete bob;
-	delete me;
-	delete src;
-	std::cout << "Subject Test START" << std::endl << std::endl;
-}
-int main(void){
-	subjectTest();
-	customTests();
-	return 0;
+        std::cout << std::endl;
+    }
+
+    return 0;
 }

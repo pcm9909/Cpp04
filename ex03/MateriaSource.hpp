@@ -7,8 +7,8 @@ class MateriaSource : public IMateriaSource
 {
 	private:
 		AMateria* materias[4];
+		std::string name[4];
 		int count;
-
 	public:
 		MateriaSource();
 		~MateriaSource();

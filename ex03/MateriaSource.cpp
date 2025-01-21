@@ -2,7 +2,6 @@
 
 MateriaSource::MateriaSource()
 {
-	std::cout << typeid(this).name() << " 생성자 호출" << std::endl;
 	for (int i = 0; i < 4; i++)
 		materias[i] = NULL;
 	count = 0;
@@ -10,7 +9,6 @@ MateriaSource::MateriaSource()
 
 MateriaSource::~MateriaSource()
 {
-	std::cout << typeid(this).name() << " 소멸자 호출" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		if (materias[i] != NULL)
@@ -47,26 +45,33 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &ms)
 
 void MateriaSource::learnMateria(AMateria *m)
 {
-	if (count < 4)
+	if(!m)
 	{
-		materias[count] = m;
-		count++;
+		std::cout <<"[learnMateria] invalid Materia!" << std::endl;
+		return ;
 	}
-	else
-		delete m;
-}
-
-AMateria *MateriaSource::createMateria(std::string const &type)
-{
-	if(count < 4)
+	for(int i = 0; i < 4; i++)
 	{
-		for (int i = 0; i < 4; i++)
+		if(this->materias[i] == NULL)
 		{
-			if (materias[i] != NULL && materias[i]->getType() == type)
-			{
-				return materias[i]->clone();
-			}
+			std::cout <<"[learnMateria] learn Materia!" << i << std::endl;
+			this->materias[i] = m;
+			this->name[i] = m->getType();
+			break;
 		}
 	}
+}
+
+AMateria *MateriaSource::createMateria(std::string const & type)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->name[i] == type)
+		{
+			std::cout << "Create Materia !" << std::endl;
+			return materias[i]->clone();
+		}
+	}
+	std::cout << "Fail to Create Materia !" << std::endl;
 	return NULL;
 }

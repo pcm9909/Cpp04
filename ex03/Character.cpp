@@ -2,22 +2,22 @@
 
 Character::Character(std::string name)
 {
-	std::cout << typeid(this).name() << " 생성자 호출" << std::endl;
     this->name = name;
 	this->m = NULL;
-    for (int i = 0; i < 4; i++)
-        materias[i] = NULL;
+    for(int i = 0; i < 4; i++)
+	{
+		inventory[i] = NULL;
+	}
 }
 
 Character::~Character()
 {
-	std::cout << typeid(this).name() << " 소멸자 호출" << std::endl;
     for (int i = 0; i < 4; i++)
     {
-        if (materias[i] != NULL)
+        if (inventory[i] != NULL)
 		{
-            delete materias[i];
-			materias[i] = NULL;
+            delete inventory[i];
+			inventory[i] = NULL;
 		}
     }
 	deleteAll(this->m);
@@ -29,10 +29,10 @@ Character::Character(const Character &character)
     this->name = character.name;
     for (int i = 0; i < 4; i++)
     {
-        if (character.materias[i] != NULL)
-            materias[i] = character.materias[i]->clone();
+        if (character.inventory[i] != NULL)
+            inventory[i] = character.inventory[i]->clone();
         else
-            materias[i] = NULL;
+            inventory[i] = NULL;
     }
 }
 
@@ -41,12 +41,12 @@ Character &Character::operator=(const Character &character)
     this->name = character.name;
     for (int i = 0; i < 4; i++)
     {
-        if (materias[i] != NULL)
-            delete materias[i];
-        if (character.materias[i] != NULL)
-            materias[i] = character.materias[i]->clone();
+        if (inventory[i] != NULL)
+            delete inventory[i];
+        if (character.inventory[i] != NULL)
+            inventory[i] = character.inventory[i]->clone();
         else
-            materias[i] = NULL;
+            inventory[i] = NULL;
     }
     return *this;
 }
@@ -60,37 +60,40 @@ void Character::equip(AMateria *m)
 {
     for (int i = 0; i < 4; i++)
     {
-        if (materias[i] == NULL)
+        if (inventory[i] == NULL)
         {
-            materias[i] = m;
+            inventory[i] = m;
+			std::cout << "Equip success" << std::endl;
             break;
         }
+		if(i == 5)
+		{
+			std::cout << "inventory Full" <<std::endl;
+		}
     }
 }
 
 void Character::unequip(int idx)
 {
-    if ((idx >= 0 && idx < 4) )
+    if ((idx >= 0 && idx < 4) && inventory[idx] != NULL)
 	{
-		if(!this->m)
-		{
-			this->m = new MateriaList(materias[idx]);
-		}
-		else
-		{
-			MateriaList *node = new MateriaList(materias[idx]);
-			node->prev = this->m;
-			this->m->next = node;
-			this->m = node;
-		}
-        materias[idx] = NULL;
+		std::cout << "[UNEQUIP] " << this->name[idx] <<std::endl;
+		MateriaList *node = new MateriaList(inventory[idx]);
+		node->prev = this->m;
+		this->m->next = node;
+		this->m = node;
+        inventory[idx] = NULL;
 	}
 }
 
 void Character::use(int idx, ICharacter &target)
 {
-    if (idx >= 0 && idx < 4 && materias[idx] != NULL)
-        materias[idx]->use(target);
+    if (idx >= 0 && idx < 4 && inventory[idx] != NULL)
+	{
+        inventory[idx]->use(target);
+	}
+	else
+		std::cout << "can't find use" << std::endl;
 }
 
 void Character::deleteAll(MateriaList* head) {
