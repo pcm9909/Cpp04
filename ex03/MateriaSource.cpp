@@ -57,7 +57,7 @@ void MateriaSource::learnMateria(AMateria *m)
 	{
 		if(this->materias[i] == NULL)
 		{
-			std::cout <<"[learnMateria] learn Materia!" << i << std::endl;
+			std::cout <<"[learnMateria] learn Materia!" << std::endl;
 			this->materias[i] = m;
 			this->name[i] = m->getType();
 			break;
