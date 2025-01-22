@@ -3,7 +3,10 @@
 MateriaSource::MateriaSource()
 {
 	for (int i = 0; i < 4; i++)
+	{
 		materias[i] = NULL;
+		used[i] = 0;
+	}
 	count = 0;
 }
 
@@ -59,6 +62,11 @@ void MateriaSource::learnMateria(AMateria *m)
 			this->name[i] = m->getType();
 			break;
 		}
+		if(i == 3)
+		{
+			std::cout << "[learnMateria] inventory full" << std::endl;
+			delete m;
+		}
 	}
 }
 
@@ -66,12 +74,13 @@ AMateria *MateriaSource::createMateria(std::string const & type)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (this->name[i] == type)
+		if (this->name[i] == type && !this->used[i])
 		{
-			std::cout << "Create Materia !" << std::endl;
+			std::cout << "[Create Materia] Materia Created" << std::endl;
+			this->used[i] = 1;
 			return materias[i]->clone();
 		}
 	}
-	std::cout << "Fail to Create Materia !" << std::endl;
+	std::cout << "[Create Materia] Fail to Create Materia" << std::endl;
 	return NULL;
 }

@@ -98,19 +98,23 @@ int main() {
     {
         std::cout << "3. if somebody try to unequip empty slot " << std::endl;
         IMateriaSource *src = new MateriaSource();
-        src->learnMateria(new Ice());
-		src->learnMateria(new Ice());
-		src->learnMateria(new Ice());
+		src->learnMateria(new Cure());
+		src->learnMateria(new Cure());
+		src->learnMateria(new Cure());
+		src->learnMateria(new Cure());
 		src->learnMateria(new Cure());
         ICharacter *me = new Character("me");
 		AMateria* tmp;
+		ICharacter *bob = new Character("bob");
 		tmp = src->createMateria("ice");
         me->equip(tmp);
         tmp = src->createMateria("cure");
         me->equip(tmp);
         tmp = src->createMateria("cure");
         me->equip(tmp);
-        tmp = src->createMateria("ice");
+        tmp = src->createMateria("cure");
+		me->use(11, *bob);
+		me->equip(tmp);
         me->unequip(1);
         me->unequip(2);
         me->unequip(3);
@@ -121,6 +125,7 @@ int main() {
         me->unequip(3);
 
 
+		delete bob;
         delete src;
         delete me;
 

@@ -1,5 +1,9 @@
 #include "AMateria.hpp"
 
+AMateria::AMateria() : type(NULL)
+{
+}
+
 AMateria::AMateria(std::string const &type)
 {
 	this->type = type;

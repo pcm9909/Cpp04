@@ -14,14 +14,13 @@ Character::~Character()
 {
     for (int i = 0; i < 4; i++)
     {
-        if (inventory[i] != NULL)
+        if (inventory[i])
 		{
             delete inventory[i];
 			inventory[i] = NULL;
 		}
     }
 	deleteAll(this->m);
-
 }
 
 Character::Character(const Character &character)
@@ -60,15 +59,15 @@ void Character::equip(AMateria *m)
 {
     for (int i = 0; i < 4; i++)
     {
-        if (inventory[i] == NULL)
+        if (inventory[i] != NULL)
         {
             inventory[i] = m;
-			std::cout << "Equip success" << std::endl;
+			std::cout << "[equip]Equip success" << std::endl;
             break;
         }
-		if(i == 5)
+		if(i == 3)
 		{
-			std::cout << "inventory Full" <<std::endl;
+			std::cout << "[equip]inventory Full" <<std::endl;
 		}
     }
 }
@@ -77,23 +76,33 @@ void Character::unequip(int idx)
 {
     if ((idx >= 0 && idx < 4) && inventory[idx] != NULL)
 	{
-		std::cout << "[UNEQUIP] " << this->name[idx] <<std::endl;
+		std::cout << "[UNEQUIP] unequip Materia" << std::endl;
 		MateriaList *node = new MateriaList(inventory[idx]);
-		node->prev = this->m;
-		this->m->next = node;
+		if(this->m)
+		{
+			node->prev = this->m;
+			this->m->next = node;
+		}
 		this->m = node;
         inventory[idx] = NULL;
+	}
+	else
+	{
+		std::cout << "[UNEQUIP] unequip Materia" << std::endl;
 	}
 }
 
 void Character::use(int idx, ICharacter &target)
 {
-    if (idx >= 0 && idx < 4 && inventory[idx] != NULL)
+    if (idx >= 0 && idx < 4)
 	{
-        inventory[idx]->use(target);
+		if(inventory[idx] != NULL)
+        	inventory[idx]->use(target);
+		else
+			std::cout << "[use] inventory empty" << std::endl;
 	}
 	else
-		std::cout << "can't find use" << std::endl;
+		std::cout << "[use] invalid idx num" << std::endl;
 }
 
 void Character::deleteAll(MateriaList* head) {
@@ -102,7 +111,6 @@ void Character::deleteAll(MateriaList* head) {
 
     while (current)
 	{
-		std::cout << "called" << std::endl;
         nextNode = current->prev;
         delete current;
         current = nextNode;
